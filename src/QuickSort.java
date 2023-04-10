@@ -1,5 +1,6 @@
-public class QuickSort {
+import java.util.Random;
 
+public class QuickSort {
     public static void quickSort(int[] arr, int low, int high) {
         if (low < high) {
             int pivotIndex = partition(arr, low, high);
@@ -9,22 +10,31 @@ public class QuickSort {
     }
 
     private static int partition(int[] arr, int low, int high) {
-        int pivot = arr[low];
+        int pivotIndex = choosePivot(low, high);
+        int pivotValue = arr[pivotIndex];
+        int temp = arr[pivotIndex];
+        arr[pivotIndex] = arr[high];
+        arr[high] = temp;
         int i = low - 1;
-
         for (int j = low; j < high; j++) {
-            if (arr[j] <= pivot) {
+            if (arr[j] <= pivotValue) {
                 i++;
-                int temp = arr[i];
+                temp = arr[i];
                 arr[i] = arr[j];
                 arr[j] = temp;
             }
         }
-        int temp = arr[i + 1];
+        temp = arr[i + 1];
         arr[i + 1] = arr[high];
         arr[high] = temp;
-
         return i + 1;
+
+
+    }
+
+    private static int choosePivot(int low, int high) {
+        Random rand = new Random();
+        return rand.nextInt(high - low + 1) + low;
     }
 
     public static void main(String[] args) {
